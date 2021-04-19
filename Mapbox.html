@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Map Box</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+</head>
+<template>
+    <div class="map-container" ref="myMap"></div>
+</template>
+
+<script>
+    import mapbox from 'mapbox-gl';
+
+    export default {
+        name: "MyMap",
+        mounted: function() {
+            const myAPIKey = 'YOUR_API_KEY_HERE';
+            const mapStyle = 'https://maps.geoapify.com/v1/styles/osm-carto/style.json';
+
+            const initialState = {
+                lng: 11,
+                lat: 49,
+                zoom: 4
+            };
+
+            const map = new mapboxgl.Map({
+                container: this.$refs.myMap,
+                style: `${mapStyle}?apiKey=${myAPIKey}`,
+                center: [initialState.lng, initialState.lat],
+                zoom: initialState.zoom
+            });
+
+            const markerPopup = new mapBox.Popup().setText('Some marker');
+            new mapBox.Marker().setLngLat([initialState.lng, initialState.lat]).setPopup(markerPopup).addTo(map);
+        }
+    };
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+    @import '~mapbox-gl/dist/mapbox-gl.css';
+
+    .map-container {
+        height: 100%;
+        width: 100%;
+    }
+</style>
+</html>
